@@ -147,23 +147,26 @@ flutter run
 - Personal finance summary cards
 
 
-```md
+
 
 ## Screenshots
 
 ### Authentication
 
-| Get Started | Login |
-|------------|-------|
-| ![Get Started](docs/screenshots/get_started.png) | ![Login](docs/screenshots/login_screen.png) |
+<p align="center">
+  <img src="docs/screenshots/get_started.png" width="220"/>
+  <img src="docs/screenshots/login_screen.png" width="220"/>
+</p>
 
 ### Main App
 
-| Home | Home (Alt) | Balance | Profile | Profile (Alt) |
-|------|------------|---------|---------|----------------|
-| ![Home](docs/screenshots/home.png) | ![Home 2](docs/screenshots/home_2.png) | ![Balance](docs/screenshots/balance.png) | ![Profile 1](docs/screenshots/profile_screen_1.png) | ![Profile 2](docs/screenshots/profile_screen_2.png) |
-
-```
+<p align="center">
+  <img src="docs/screenshots/home.png" width="160"/>
+  <img src="docs/screenshots/home_2.png" width="160"/>
+  <img src="docs/screenshots/balance.png" width="160"/>
+  <img src="docs/screenshots/profile_screen_1.png" width="160"/>
+  <img src="docs/screenshots/profile_screen_2.png" width="160"/>
+</p>
 
 ## Authentication Flow
 
