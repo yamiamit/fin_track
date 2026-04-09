@@ -12,7 +12,7 @@ class GetStartedScreen extends StatelessWidget {
         children: [
           const _BackgroundGlow(),
           SafeArea(
-            child: SingleChildScrollView(          // ✅ wrap here
+            child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(24, 24, 24, 28),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class GetStartedScreen extends StatelessWidget {
                     title: 'Secure sign in',
                     subtitle: 'Use email auth or Google sign-in from one place.',
                   ),
-                  const SizedBox(height: 32),        // ✅ replaced Spacer with fixed gap
+                  const SizedBox(height: 32),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(

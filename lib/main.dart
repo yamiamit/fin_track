@@ -52,7 +52,7 @@ class AuthGate extends StatelessWidget {
     final transactionController = context.read<TransactionController>();
 
     return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
+      stream: FirebaseAuth.instance.authStateChanges(),// reads whether we hv a firebase instance or not
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
@@ -60,13 +60,14 @@ class AuthGate extends StatelessWidget {
           );
         }
 
-        final user = snapshot.data;
+        final user = snapshot.data;// if it doesnt have than redirect it to getStartedScreen()
         if (user == null) {
           return const GetStartedScreen();
         }
 
-        return MainNavigationScreen(
-          transactionController: transactionController,
+        return MainNavigationScreen(// else MainNavigationScreen
+          transactionController: transactionController,// MAJOR BUG i thought this context is global we can refer it from anywhere
+          //but seems like we hv to pass it as a reference down the widget tree :(
           userName: user.displayName,
         );
       },
