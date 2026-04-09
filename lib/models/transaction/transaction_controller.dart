@@ -68,6 +68,7 @@ class TransactionController extends ChangeNotifier {
     try {
       _box = await Hive.openBox(boxName);
       await _reloadTransactions();
+      _initError = null;
       _isReady = true;
       notifyListeners();
     } catch (e, stackTrace) {
@@ -129,13 +130,11 @@ class TransactionController extends ChangeNotifier {
 
     try {
       _transactions = box.values
-          .whereType<Map<String, dynamic>>()
+          .whereType<Map>()
+          .map((entry) => Map<dynamic, dynamic>.from(entry))// issue was we were returning map<string,dynamic> but this expects map<dynamic,dynamic>
           .map(TransactionModel.fromMap)
           .toList()
         ..sort((a, b) => b.date.compareTo(a.date));
-
-      // Only notify if this is an explicit reload (not during initialization)
-      // Or move notifyListeners() to the caller
     } catch (e) {
       print('Error reloading transactions: $e');
       _transactions = [];

@@ -7,9 +7,11 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
     required this.transactionController,
+    required this.userName,
   });
 
   final TransactionController transactionController;
+  final String userName;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -30,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ? const Color(0xFFE6EBF2)
         : colorScheme.primaryContainer;
     final recentTransactions = widget.transactionController.recentTransactions;
+    final firstName = widget.userName.trim().split(' ').first;
+    final cardHolderName = widget.userName.trim().toUpperCase();
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -61,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const SizedBox(height: 10),
                     Text(
-                      "Hey, Alex",
+                      "Hey, $firstName",
                       style: TextStyle(
                         color: primaryTextColor,
                         fontSize: 22,
@@ -104,10 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Card Holder Name",
                                     style: TextStyle(
                                       color: Colors.white54,
@@ -115,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   Text(
-                                    "ALEX",
+                                    cardHolderName,
                                     style: TextStyle(color: Colors.white),
                                   ),
                                 ],

@@ -1,4 +1,5 @@
 import 'package:fin_track/models/transaction/transaction_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fin_track/screens/balance_screen/balance_screen.dart';
 import 'package:fin_track/screens/home_screen/home_screen.dart';
@@ -9,9 +10,11 @@ class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({
     super.key,
     required this.transactionController,
+    this.userName,
   });
 
   final TransactionController transactionController;
+  final String? userName;
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
@@ -65,10 +68,24 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           );
         }
 
+        final currentUser = FirebaseAuth.instance.currentUser;
+        final resolvedUserName =
+            widget.userName?.trim().isNotEmpty == true
+                ? widget.userName!.trim()
+                : currentUser?.displayName?.trim().isNotEmpty == true
+                ? currentUser!.displayName!.trim()
+                : currentUser?.email?.split('@').first ?? 'User';
+
         final List<Widget> screens = [
-          HomeScreen(transactionController: controller),
+          HomeScreen(
+            transactionController: controller,
+            userName: resolvedUserName,
+          ),
           BalanceScreen(transactionController: controller),
-          ProfileScreen(transactionController: controller),
+          ProfileScreen(
+            transactionController: controller,
+            userName: resolvedUserName,
+          ),
         ];
 
         return Scaffold(

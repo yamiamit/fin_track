@@ -1,10 +1,24 @@
-import 'package:flutter/material.dart';
+import 'package:fin_track/models/sign_in/google_sign_in.dart';
+import 'package:fin_track/screens/login_screen/sign_in.dart';
 import 'package:fin_track/utils/theme/app_theme.dart';
 import 'package:fin_track/utils/theme/theme_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({super.key});
+
+  Future<void> _handleSignOut(BuildContext context) async {
+    await GoogleSignInService().signOut();
+    if (!context.mounted) {
+      return;
+    }
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const LoginScreen()),
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,12 +97,16 @@ class TopBar extends StatelessWidget {
                       color: iconColor,
                     ),
                   ),
+                  IconButton(
+                    tooltip: 'Sign out',
+                    onPressed: () => _handleSignOut(context),
+                    icon: Icon(Icons.logout, color: iconColor),
+                  ),
                 ],
               ),
             ],
           ),
         ),
-
         Divider(color: dividerColor, height: 1),
       ],
     );

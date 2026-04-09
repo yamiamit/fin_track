@@ -1,4 +1,5 @@
 import 'package:fin_track/models/transaction/transaction_controller.dart';
+import 'package:fin_track/utils/transaction_sheet/transaction_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/top_bar.dart';
@@ -7,9 +8,11 @@ class ProfileScreen extends StatefulWidget {
   const ProfileScreen({
     super.key,
     required this.transactionController,
+    required this.userName,
   });
 
   final TransactionController transactionController;
+  final String userName;
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -26,11 +29,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final isDarkMode = theme.brightness == Brightness.dark;
     final primaryTextColor = colorScheme.onSurface;
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final displayName = widget.userName.trim();
+    final avatarLetter = displayName.isNotEmpty
+        ? displayName.substring(0, 1).toUpperCase()
+        : 'U';
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            builder: (_) {
+              return BottomTransactionSheet(
+                transactionController: widget.transactionController,
+              );
+            },
+          );
+        },
         child: const Icon(Icons.add),
       ),
       body: GestureDetector(
@@ -66,7 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'P',
+                                  avatarLetter,
                                   style: TextStyle(
                                     color: isDarkMode
                                         ? Colors.black
@@ -79,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             const SizedBox(width: 12),
                             Text(
-                              'Alex Yu',
+                              displayName,
                               style: TextStyle(
                                 color: primaryTextColor,
                                 fontSize: 18,
@@ -116,6 +134,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         if (!isPreview)
                           Column(
                             children: [
+                              Container(
+                                child: Text("Update details is Non Working hardcoded as of now!!",
+                                ),
+                              ),
                               const SizedBox(height: 16),
                               _buildField('Full Name', 'Enter your full name'),
                               const SizedBox(height: 16),
@@ -145,7 +167,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+
+                                  },// we kept it as simple as possible will see what to do
                                   child: const Text('Update Details'),
                                 ),
                               ),
